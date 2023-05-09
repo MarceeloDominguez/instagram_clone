@@ -5,7 +5,7 @@ import Navigation from "./src/navigation/Navigation";
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <Navigation />
     </NavigationContainer>
   );
