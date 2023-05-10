@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   tabStyle: {
     elevation: 0,
     backgroundColor: "#000",
+    borderTopWidth: 0,
   },
   avatarTab: {
     width: 32,

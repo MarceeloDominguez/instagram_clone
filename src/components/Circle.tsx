@@ -1,16 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Avatar } from "../interface/interface";
+import { Data } from "../interface/interface";
 
 const CIRCLE_BORDER = 68;
 const CIRCLE_AVATAR = 62;
 
 type Prop = {
-  item: Avatar;
+  item: Data;
+  showNameUser?: boolean;
+  circleBorder?: number;
+  circleAvatar?: number;
 };
 
-export default function Circle({ item }: Prop) {
+export default function Circle({
+  item,
+  showNameUser = true,
+  circleAvatar,
+  circleBorder,
+}: Prop) {
   const { avatar, history, namaUser } = item;
 
   return (
@@ -23,13 +31,30 @@ export default function Circle({ item }: Prop) {
         ]}
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 0 }}
-        style={styles.circleBorder}
+        style={[
+          styles.circleBorder,
+          {
+            width: circleBorder ? circleBorder : CIRCLE_BORDER,
+            height: circleBorder ? circleBorder : CIRCLE_BORDER,
+          },
+        ]}
       >
-        <Image source={{ uri: avatar }} style={styles.image} />
+        <Image
+          source={{ uri: avatar }}
+          style={[
+            styles.image,
+            {
+              width: circleAvatar ? circleAvatar : CIRCLE_AVATAR,
+              height: circleAvatar ? circleAvatar : CIRCLE_AVATAR,
+            },
+          ]}
+        />
       </LinearGradient>
-      <Text numberOfLines={1} style={styles.nameUser}>
-        {namaUser}
-      </Text>
+      {showNameUser && (
+        <Text numberOfLines={1} style={styles.nameUser}>
+          {namaUser}
+        </Text>
+      )}
     </View>
   );
 }
@@ -40,15 +65,11 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
   circleBorder: {
-    width: CIRCLE_BORDER,
-    height: CIRCLE_BORDER,
     borderRadius: CIRCLE_BORDER / 2,
     justifyContent: "center",
     alignItems: "center",
   },
   image: {
-    width: CIRCLE_AVATAR,
-    height: CIRCLE_AVATAR,
     borderRadius: CIRCLE_AVATAR / 2,
     borderWidth: 3,
     borderColor: "#000",

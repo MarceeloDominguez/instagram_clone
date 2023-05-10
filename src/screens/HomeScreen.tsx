@@ -1,17 +1,19 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import CirclesHorizontal from "../components/CirclesHorizontal";
+import Post from "../components/Post";
+import { data } from "../data/data";
 
 export default function HomeScreen() {
   return (
     <View>
       <FlatList
         ListHeaderComponent={() => <CirclesHorizontal />}
-        data={[...Array(10)]}
+        data={data}
         showsVerticalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({}) => {
-          return <Text>Hola Mundo</Text>;
+        renderItem={({ item }) => {
+          return <Post item={item} />;
         }}
       />
     </View>
