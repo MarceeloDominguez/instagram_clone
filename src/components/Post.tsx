@@ -1,9 +1,18 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Animated,
+} from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import Circle from "./Circle";
 import { Data } from "../interface/interface";
 import FooterPost from "./FooterPost";
+
+const { width } = Dimensions.get("screen");
 
 type Prop = {
   item: Data;
@@ -11,6 +20,7 @@ type Prop = {
 
 export default function Post({ item }: Prop) {
   const { namaUser, image, description } = item;
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   return (
     <View>
@@ -26,8 +36,34 @@ export default function Post({ item }: Prop) {
         </View>
         <Entypo name="dots-three-vertical" size={18} color="#fff" />
       </View>
-      <Image source={{ uri: image }} style={styles.image} />
-      <FooterPost namaUser={namaUser} description={description!} />
+      <Animated.FlatList
+        data={image}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={width}
+        decelerationRate="fast"
+        bounces={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: true }
+        )}
+        renderItem={({ item }) => {
+          return (
+            <Image
+              source={{ uri: item }}
+              style={{ width: width, height: 300 }}
+            />
+          );
+        }}
+      />
+      <FooterPost
+        namaUser={namaUser}
+        description={description!}
+        image={image!}
+        width={width}
+        scrollX={scrollX}
+      />
     </View>
   );
 }

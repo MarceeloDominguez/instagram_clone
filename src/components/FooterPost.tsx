@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Animated } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Circle from "./Circle";
@@ -7,6 +7,9 @@ import Circle from "./Circle";
 type Prop = {
   namaUser: string;
   description: string;
+  image: string[];
+  width: number;
+  scrollX: Animated.Value;
 };
 
 const item = {
@@ -15,9 +18,37 @@ const item = {
   namaUser: "",
 };
 
-export default function FooterPost({ namaUser, description }: Prop) {
+export default function FooterPost({
+  namaUser,
+  description,
+  image,
+  width,
+  scrollX,
+}: Prop) {
   return (
     <View style={styles.container}>
+      {image.length > 1 && (
+        <View style={styles.pagination}>
+          {image.map((_, index) => {
+            return <View key={index} style={styles.dot} />;
+          })}
+          <Animated.View
+            style={[
+              styles.dotIndicator,
+              {
+                transform: [
+                  {
+                    translateX: Animated.divide(scrollX, width).interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, 12],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          />
+        </View>
+      )}
       <View style={styles.wrapIcons}>
         <View style={styles.wrapIconsLeft}>
           <MaterialIcons name="favorite-border" size={25} color="#fff" />
@@ -118,5 +149,28 @@ const styles = StyleSheet.create({
   translation: {
     color: "#fff",
     fontSize: 12,
+  },
+  pagination: {
+    position: "absolute",
+    top: 24,
+    flexDirection: "row",
+    alignSelf: "center",
+    color: "violet",
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 6,
+    backgroundColor: "#5b5d5f",
+    marginRight: 6,
+  },
+  dotIndicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 8,
+    backgroundColor: "#0095f6",
+    position: "absolute",
+    top: -2 / 2,
+    left: -2 / 2,
   },
 });
