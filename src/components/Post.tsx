@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ type Prop = {
 export default function Post({ item }: Prop) {
   const { namaUser, image, description } = item;
   const scrollX = React.useRef(new Animated.Value(0)).current;
+  const [indexImage, setIndexImage] = useState(0);
 
   return (
     <View>
@@ -49,14 +50,20 @@ export default function Post({ item }: Prop) {
           { useNativeDriver: true }
         )}
         renderItem={({ item }) => {
-          return (
-            <Image
-              source={{ uri: item }}
-              style={{ width: width, height: 300 }}
-            />
-          );
+          return <Image source={{ uri: item }} style={styles.image} />;
+        }}
+        onMomentumScrollEnd={(e) => {
+          setIndexImage(Math.round(e.nativeEvent.contentOffset.x / width));
         }}
       />
+
+      {(item.image?.length as number) > 1 && (
+        <View style={styles.wrapNumberImage}>
+          <Text style={styles.numberImage}>
+            {indexImage + 1}/{item.image?.length}
+          </Text>
+        </View>
+      )}
       <FooterPost
         namaUser={namaUser}
         description={description!}
@@ -91,7 +98,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   image: {
-    width: "100%",
+    width: width,
     height: 300,
+  },
+  wrapNumberImage: {
+    position: "absolute",
+    right: 20,
+    top: 80,
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    borderRadius: 12.5,
+    width: 40,
+    height: 25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  numberImage: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
