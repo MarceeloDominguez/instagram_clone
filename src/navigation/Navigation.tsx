@@ -9,6 +9,7 @@ import AddScreen from "../screens/AddScreen";
 import ReelsScreen from "../screens/ReelsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { MaterialIcons } from "@expo/vector-icons";
+import HeaderLeftProfile from "../components/HeaderLeftProfile";
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +53,7 @@ export default function Navigation() {
           headerShadowVisible: false,
           headerStyle: { backgroundColor: "#000" },
           headerLeft: () => <HeaderLeft />,
-          headerRight: () => <HeaderRight />,
+          headerRight: () => <HeaderRight iconOne="favorite-outline" />,
         }}
       />
       <Tab.Screen name="SearchScreen" component={SearchScreen} />
@@ -62,6 +63,13 @@ export default function Navigation() {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#000" },
+          headerLeft: () => <HeaderLeftProfile />,
+          headerRight: () => (
+            <HeaderRight iconOne="add-box" iconTwo="menu" showIconTwo={true} />
+          ),
           tabBarIcon: ({ focused }) => {
             return (
               <View>

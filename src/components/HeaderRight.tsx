@@ -2,14 +2,26 @@ import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-export default function HeaderRight() {
+type MaterialIconName = React.ComponentProps<typeof MaterialIcons>["name"];
+
+type Prop = {
+  iconOne: MaterialIconName;
+  iconTwo?: MaterialIconName;
+  showIconTwo?: boolean;
+};
+
+export default function HeaderRight({ iconOne, iconTwo, showIconTwo }: Prop) {
   return (
     <View style={styles.wrapIconRight}>
-      <MaterialIcons name="favorite-outline" size={24} color="#fff" />
-      <Image
-        source={require("../../assets/arrow-top.png")}
-        style={styles.iconArrow}
-      />
+      <MaterialIcons name={iconOne} size={24} color="#fff" />
+      {showIconTwo ? (
+        <MaterialIcons name={iconTwo} size={25} color="#fff" />
+      ) : (
+        <Image
+          source={require("../../assets/arrow-top.png")}
+          style={styles.iconArrow}
+        />
+      )}
     </View>
   );
 }
