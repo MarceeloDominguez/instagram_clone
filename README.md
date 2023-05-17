@@ -2,7 +2,8 @@
 
 <table>
 <tr>
-  <td><img src="https://media.licdn.com/dms/image/D5622AQHsHiGw96D4FA/feedshare-shrink_800/0/1684164073414?e=1686787200&v=beta&t=L7ZWUOIlXTXFhkaFqW6Kkh7M-MjFNoxRJZQZTnybYig" width="300"></td>
+  <td><img src="https://github.com/MarceeloDominguez/instagram_clone/assets/70117105/ee5edc81-b7bf-46f0-8d6a-d7892dd5b137" width="300"></td>
+    <td><img src="https://github.com/MarceeloDominguez/instagram_clone/assets/70117105/4fd0bb90-b802-487e-b2a7-429cc5cb3659" width="300"></td>
 </tr>
 </table>
 
